@@ -2,37 +2,49 @@ import 'package:currency_textfield/currency_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recorrentes/models/expense_model.dart';
-import 'package:recorrentes/providers/expenses.dart';
+import 'package:recorrentes/providers/expenses_provider.dart';
 import 'package:recorrentes/widgets/shared/money_field.dart';
 import 'package:recorrentes/widgets/shared/date_picker.dart';
 import 'package:recorrentes/widgets/shared/custom_text_field.dart';
 
+final TextEditingController titleController = TextEditingController();
+final TextEditingController descriptionController = TextEditingController();
+final CurrencyTextFieldController valueController = CurrencyTextFieldController(
+  decimalSymbol: '.',
+  thousandSymbol: ',',
+  initIntValue: 0,
+);
+final TextEditingController paymentDateController = TextEditingController();
+
 class ExpenseForm extends StatelessWidget {
-  ExpenseForm({super.key, this.onClose});
+  const ExpenseForm({super.key, this.onClose});
 
   final dynamic onClose;
 
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final CurrencyTextFieldController valueController =
-      CurrencyTextFieldController(
-    decimalSymbol: '.',
-    thousandSymbol: ',',
-    initIntValue: 0,
-  );
-  final TextEditingController paymentDateController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+    void clearContent() {
+      titleController.clear();
+      descriptionController.clear();
+      valueController.clear();
+      paymentDateController.clear();
+    }
+
     void saveExpense() {
       final ExpenseModel record = ExpenseModel(
-        title: titleController.value.text,
-        description: titleController.value.text,
-        paymentDate: paymentDateController.value.text,
-        value: 100,
+        title: titleController.value.text.trim(),
+        description: descriptionController.value.text.trim(),
+        paymentDate: paymentDateController.value.text.trim(),
+        value: valueController.intValue,
       );
 
+      if (record.title.isEmpty || record.value == 0) {
+        return;
+      }
+
       context.read<ExpensesProvider>().addExpense(record);
+
+      clearContent();
       Navigator.of(context).pop();
     }
 
@@ -83,7 +95,6 @@ class ExpenseForm extends StatelessWidget {
               const SizedBox(width: 8),
               Flexible(
                 child: DatePicker(
-                  controller: paymentDateController,
                   title: 'Data de pagamento',
                   onSelectDate: extractDate,
                 ),

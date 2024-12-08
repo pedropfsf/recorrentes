@@ -1,15 +1,16 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
+final TextEditingController controller = TextEditingController();
+
 class DatePickerState extends State<DatePicker> {
   DateTime currentDate = DateTime.now();
-  final dateFormatter = DateFormat('dd/mm/yyyy');
+  final dateFormatter = DateFormat('dd/MM/yyyy');
 
   @override
   Widget build(BuildContext context) {
     Future<DateTime?> selectDate(
       BuildContext context,
-      TextEditingController? controller,
     ) async {
       final DateTime? selectedDate = await showDatePicker(
         context: context,
@@ -18,7 +19,7 @@ class DatePickerState extends State<DatePicker> {
         lastDate: DateTime(2101),
       );
 
-      if (selectedDate != null && controller != null) {
+      if (selectedDate != null) {
         controller.text = dateFormatter.format(selectedDate);
         setState(() {
           currentDate = selectedDate;
@@ -31,11 +32,11 @@ class DatePickerState extends State<DatePicker> {
     return TextField(
       readOnly: true,
       onTap: () {
-        selectDate(context, widget.controller).then((date) {
+        selectDate(context).then((date) {
           widget.onSelectDate!(date);
         });
       },
-      controller: widget.controller,
+      controller: controller,
       decoration: InputDecoration(
         isDense: true,
         hintText: widget.title,
@@ -57,10 +58,9 @@ class DatePickerState extends State<DatePicker> {
 }
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({super.key, this.title, this.controller, this.onSelectDate});
+  const DatePicker({super.key, this.title, this.onSelectDate});
 
   final String? title;
-  final TextEditingController? controller;
   final void Function(DateTime? date)? onSelectDate;
 
   @override

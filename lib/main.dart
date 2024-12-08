@@ -2,7 +2,7 @@ import 'package:recorrentes/app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recorrentes/theme/theme.dart';
-import 'package:recorrentes/providers/expenses.dart';
+import 'package:recorrentes/providers/expenses_provider.dart';
 
 void main() {
   runApp(
