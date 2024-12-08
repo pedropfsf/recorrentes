@@ -1,18 +1,24 @@
+import 'package:currency_textfield/currency_textfield.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {super.key, this.title, this.maxLines, this.controller});
+class MoneyField extends StatelessWidget {
+  const MoneyField({
+    super.key,
+    this.title,
+    this.maxLines,
+    this.controller,
+  });
 
   final String? title;
   final int? maxLines;
 
-  final TextEditingController? controller;
+  final CurrencyTextFieldController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       maxLines: maxLines,
+      keyboardType: TextInputType.number,
       controller: controller,
       decoration: InputDecoration(
         isDense: true,
