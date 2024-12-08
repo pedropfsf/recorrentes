@@ -1,10 +1,13 @@
-import 'package:currency_textfield/currency_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:currency_textfield/currency_textfield.dart';
 import 'package:recorrentes/models/expense_model.dart';
 import 'package:recorrentes/providers/expenses_provider.dart';
+import 'package:recorrentes/utils/money.dart';
 import 'package:recorrentes/widgets/shared/money_field.dart';
 import 'package:recorrentes/widgets/shared/date_picker.dart';
+import 'package:recorrentes/widgets/shared/delete_button.dart';
+import 'package:recorrentes/widgets/shared/primary_button.dart';
 import 'package:recorrentes/widgets/shared/custom_text_field.dart';
 
 final TextEditingController titleController = TextEditingController();
@@ -17,9 +20,20 @@ final CurrencyTextFieldController valueController = CurrencyTextFieldController(
 final TextEditingController paymentDateController = TextEditingController();
 
 class ExpenseForm extends StatelessWidget {
-  const ExpenseForm({super.key, this.onClose});
+  ExpenseForm({super.key, this.onClose, this.context}) {
+    if (context != null) {
+      final expensesModel = context?.read<ExpensesProvider>();
+      final expenseForEdit = expensesModel!.expenseForEdit;
+
+      titleController.text = expenseForEdit!.title;
+      descriptionController.text = expenseForEdit.description!;
+      valueController.text = getMoney(expenseForEdit.value);
+      paymentDateController.text = expenseForEdit.paymentDate!;
+    }
+  }
 
   final dynamic onClose;
+  final BuildContext? context;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +57,6 @@ class ExpenseForm extends StatelessWidget {
       }
 
       context.read<ExpensesProvider>().addExpense(record);
-
       clearContent();
       Navigator.of(context).pop();
     }
@@ -102,20 +115,21 @@ class ExpenseForm extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: saveExpense,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurpleAccent,
-              ),
-              child: const Text(
-                'Salvar',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Visibility(
+                visible: false,
+                child: DeleteButton(
+                  onPressed: () {},
                 ),
               ),
-            ),
+              const SizedBox(width: 8),
+              PrimaryButton(
+                onPressed: saveExpense,
+                title: 'Salvar',
+              )
+            ],
           ),
           const SizedBox(height: 16),
         ],
