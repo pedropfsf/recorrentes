@@ -121,13 +121,13 @@ class ExpenseFormState extends State<ExpenseForm> {
             controller: titleController,
             label: 'Título',
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 14),
           CustomTextField(
             controller: descriptionController,
             maxLines: 2,
             hintText: 'Descrição',
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 14),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -148,7 +148,7 @@ class ExpenseFormState extends State<ExpenseForm> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 14),
           FormFooter(
             deleteButtonVisible: expensesProvider.expenseForEdit != null,
             saveButtonTitle: registerButtonTitle,
@@ -164,6 +164,7 @@ class ExpenseFormState extends State<ExpenseForm> {
 
 class ExpenseForm extends StatefulWidget {
   ExpenseForm({super.key, this.onClose, this.context}) {
+    clearContent();
     if (context != null) {
       final expensesModel = context?.watch<ExpensesProvider>();
       final expenseForEdit = expensesModel!.expenseForEdit;

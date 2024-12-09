@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:recorrentes/providers/expenses_provider.dart';
 import 'package:recorrentes/widgets/expenses/form/expense_form.dart';
 
-class FloatingButtonExpenseForm extends StatelessWidget {
-  const FloatingButtonExpenseForm({super.key});
+class AddExpenseButton extends StatelessWidget {
+  const AddExpenseButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,9 @@ class FloatingButtonExpenseForm extends StatelessWidget {
       );
     }
 
-    return FloatingActionButton(
+    return IconButton(
       onPressed: openBottomSheet,
-      child: const Icon(Icons.add),
+      icon: const Icon(Icons.add),
     );
   }
 }

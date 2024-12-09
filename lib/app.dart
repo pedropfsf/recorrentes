@@ -3,24 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:recorrentes/providers/expenses_provider.dart';
 import 'package:recorrentes/utils/dimensions.dart';
-import 'package:recorrentes/utils/expenses.dart';
-import 'package:recorrentes/utils/money.dart';
+import 'package:recorrentes/widgets/expenses/counters.dart';
+import 'package:recorrentes/widgets/expenses/reload_expense_button.dart';
 import 'package:recorrentes/widgets/shared/app_bar_title.dart';
 import 'package:recorrentes/widgets/expenses/expense_item.dart';
-import 'package:recorrentes/widgets/expenses/floating_button_expense_form.dart';
+import 'package:recorrentes/widgets/expenses/add_expense_button.dart';
 
 class AppState extends State<App> {
-  bool isInitialized = false;
-
   @override
-  void didChangeDependencies() {
+  void initState() {
     final expensesProvider = context.read<ExpensesProvider>();
-    if (!isInitialized) {
-      expensesProvider.getSavedExpenses();
-      isInitialized = true;
-    }
+    expensesProvider.getSavedExpenses();
 
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
@@ -34,30 +29,25 @@ class AppState extends State<App> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      floatingActionButton: const FloatingButtonExpenseForm(),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.deepPurpleAccent,
         title: const AppBarTitle(
           title: 'Recorrentes',
         ),
+        actions: const [
+          ReloadExpenseButton(),
+          AddExpenseButton(),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Quantidade: ${expenses.length}',
-              ),
-              const SizedBox(width: 16),
-              Text(
-                'Total: ${getMoney(getTotalExpenseAmount(expenses))}',
-              ),
-            ],
+          const Padding(
+            padding: EdgeInsets.only(top: 8, bottom: 8),
+            child: Counters(),
           ),
           SizedBox(
-            height: getWindowHeight(context) - 100,
+            height: getWindowHeight(context) - 116,
             child: ReorderableListView(
               padding: const EdgeInsets.all(0),
               onReorder: expensesProvider.orderExpense,

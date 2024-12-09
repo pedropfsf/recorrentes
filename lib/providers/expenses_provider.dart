@@ -65,6 +65,13 @@ class ExpensesProvider with ChangeNotifier {
     editExpense(expense);
   }
 
+  void unpayAllExpenses() {
+    for (var expense in _expenses) {
+      expense.isPaid = false;
+    }
+    notifyListeners();
+  }
+
   UnmodifiableListView<ExpenseModel> get expenses {
     return UnmodifiableListView(_expenses);
   }
