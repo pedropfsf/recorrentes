@@ -33,6 +33,20 @@ class ExpenseFormState extends State<ExpenseForm> {
   String? selectedDate;
 
   @override
+  void initState() {
+    final expensesProvider = context.read<ExpensesProvider>();
+    final expenseForEdit = expensesProvider.expenseForEdit;
+
+    setState(() {
+      if (expenseForEdit != null && expenseForEdit.paymentDate != null) {
+        selectedDate = DateTime.parse(expenseForEdit.paymentDate!).toString();
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final expensesProvider = context.watch<ExpensesProvider>();
 
@@ -63,8 +77,6 @@ class ExpenseFormState extends State<ExpenseForm> {
     void saveExpense() {
       final expenseForEdit = expensesProvider.expenseForEdit;
       final id = expenseForEdit != null ? expenseForEdit.id : uuid.v4();
-
-      debugPrint(selectedDate);
 
       final ExpenseModel record = ExpenseModel(
         id: id,
@@ -131,6 +143,7 @@ class ExpenseFormState extends State<ExpenseForm> {
                   controller: paymentDateController,
                   title: 'Data de pagamento',
                   onSelectDate: extractDate,
+                  onLoad: (date) => extractDate(date),
                 ),
               ),
             ],
@@ -160,9 +173,8 @@ class ExpenseForm extends StatefulWidget {
         valueController.text = getMoney(expenseForEdit.value);
 
         if (expenseForEdit.paymentDate != null) {
-          paymentDateController.text = dateForFront(
-            expenseForEdit.paymentDate!,
-          );
+          paymentDateController.text =
+              dateForFront(expenseForEdit.paymentDate) ?? '';
         }
       }
     }

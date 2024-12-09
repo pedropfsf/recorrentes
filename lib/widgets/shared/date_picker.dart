@@ -1,9 +1,20 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:recorrentes/utils/date.dart';
 
 class DatePickerState extends State<DatePicker> {
   DateTime currentDate = DateTime.now();
   final dateFormatter = DateFormat('dd/MM/yyyy');
+
+  @override
+  void initState() {
+    debugPrint(widget.controller!.text);
+    final date = dateForDateTime(widget.controller!.text) ?? DateTime.now();
+    setState(() {
+      currentDate = date;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +67,17 @@ class DatePickerState extends State<DatePicker> {
 }
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({super.key, this.title, this.onSelectDate, this.controller});
+  const DatePicker({
+    super.key,
+    this.title,
+    this.onSelectDate,
+    this.controller,
+    this.onLoad,
+  });
 
   final String? title;
   final void Function(DateTime? date)? onSelectDate;
+  final void Function(DateTime? date)? onLoad;
   final TextEditingController? controller;
 
   @override

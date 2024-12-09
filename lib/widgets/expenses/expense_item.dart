@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recorrentes/utils/money.dart';
+import 'package:recorrentes/utils/date.dart';
 import 'package:recorrentes/models/expense_model.dart';
 import 'package:recorrentes/providers/expenses_provider.dart';
+import 'package:recorrentes/utils/values.dart';
 import 'package:recorrentes/widgets/expenses/form/expense_form.dart';
 import 'package:recorrentes/widgets/shared/primary_button.dart';
 
@@ -36,9 +38,12 @@ class ExpenseItem extends StatelessWidget {
     }
 
     return ListTile(
+      dense: true,
       leading: SizedBox(
         width: 72,
-        child: Row(
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          direction: Axis.vertical,
           children: [
             ReorderableDragStartListener(
               index: dragIndex!,
@@ -55,10 +60,31 @@ class ExpenseItem extends StatelessWidget {
         ),
       ),
       title: Text(item.title),
-      subtitle: Text(
-        getMoney(item.value),
-        style: const TextStyle(
-          color: Colors.green,
+      subtitle: SizedBox(
+        height: 40,
+        child: Wrap(
+          direction: Axis.vertical,
+          children: [
+            Opacity(
+              opacity: 0.8,
+              child: Text(
+                returnIfNull(
+                  dateForFront(item.paymentDate),
+                  'Sem data de pagamento',
+                ),
+                style: const TextStyle(
+                  fontSize: 10,
+                ),
+              ),
+            ),
+            const SizedBox(height: 1),
+            Text(
+              getMoney(item.value),
+              style: const TextStyle(
+                color: Colors.green,
+              ),
+            )
+          ],
         ),
       ),
       trailing: PrimaryButton(
