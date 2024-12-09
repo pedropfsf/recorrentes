@@ -11,13 +11,30 @@ class ExpensesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeExpense(ExpenseModel item) {
-    final index = _expenses.indexWhere((expense) => item.id == item.id);
-    _expenses.removeAt(index);
+  void editExpense(ExpenseModel item) {
+    final index = _expenses.indexWhere((expense) => expense.id == item.id);
+    _expenses[index] = item;
     notifyListeners();
   }
 
-  void setExpense(ExpenseModel item) {
+  void removeExpense(ExpenseModel item) {
+    final index = _expenses.indexWhere((expense) => expense.id == item.id);
+    if (index > -1) {
+      _expenses.removeAt(index);
+    }
+    notifyListeners();
+  }
+
+  void orderExpense(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final ExpenseModel element = _expenses.removeAt(oldIndex);
+    _expenses.insert(newIndex, element);
+    notifyListeners();
+  }
+
+  void setExpenseForEdit(ExpenseModel? item) {
     expenseForEdit = item;
   }
 

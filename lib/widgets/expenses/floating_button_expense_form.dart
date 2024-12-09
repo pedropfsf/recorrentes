@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recorrentes/widgets/expenses/expense_form.dart';
+import 'package:recorrentes/widgets/expenses/form/expense_form.dart';
 
 class FloatingButtonExpenseForm extends StatelessWidget {
   const FloatingButtonExpenseForm({super.key});

@@ -1,8 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
-final TextEditingController controller = TextEditingController();
-
 class DatePickerState extends State<DatePicker> {
   DateTime currentDate = DateTime.now();
   final dateFormatter = DateFormat('dd/MM/yyyy');
@@ -19,8 +17,8 @@ class DatePickerState extends State<DatePicker> {
         lastDate: DateTime(2101),
       );
 
-      if (selectedDate != null) {
-        controller.text = dateFormatter.format(selectedDate);
+      if (selectedDate != null && widget.controller != null) {
+        widget.controller?.text = dateFormatter.format(selectedDate);
         setState(() {
           currentDate = selectedDate;
         });
@@ -36,7 +34,7 @@ class DatePickerState extends State<DatePicker> {
           widget.onSelectDate!(date);
         });
       },
-      controller: controller,
+      controller: widget.controller,
       decoration: InputDecoration(
         isDense: true,
         hintText: widget.title,
@@ -58,10 +56,11 @@ class DatePickerState extends State<DatePicker> {
 }
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({super.key, this.title, this.onSelectDate});
+  const DatePicker({super.key, this.title, this.onSelectDate, this.controller});
 
   final String? title;
   final void Function(DateTime? date)? onSelectDate;
+  final TextEditingController? controller;
 
   @override
   createState() => DatePickerState();
