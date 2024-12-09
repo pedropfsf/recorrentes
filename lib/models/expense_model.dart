@@ -19,4 +19,25 @@ class ExpenseModel {
   double value = 0;
   String? paymentDate;
   String? createdAt;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'value': value,
+      'paymentDate': paymentDate,
+      'createdAt': createdAt,
+    };
+  }
+
+  static ExpenseModel fromMap(Map<String, dynamic> data) {
+    return ExpenseModel(
+      id: data['id'],
+      title: data['title'],
+      description: data['description'],
+      value: data['value'],
+      paymentDate: data['paymentDate'],
+    );
+  }
 }

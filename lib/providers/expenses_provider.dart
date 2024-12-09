@@ -46,15 +46,18 @@ class ExpensesProvider with ChangeNotifier {
 
   void setSavedExpenses() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('expenses', jsonEncode(_expenses));
+    final records = _expenses.map((expense) => expense.toMap()).toList();
+    prefs.setString('expenses', jsonEncode(records));
   }
 
   void getSavedExpenses() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final expensesInJson = prefs.getString('expenses');
     if (expensesInJson != null) {
-      _expenses = jsonDecode(expensesInJson);
+      final data = jsonDecode(expensesInJson) as List<dynamic>;
+      _expenses = data.map((item) => ExpenseModel.fromMap(item)).toList();
     }
+    notifyListeners();
   }
 
   UnmodifiableListView<ExpenseModel> get expenses {

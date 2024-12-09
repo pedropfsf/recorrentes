@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recorrentes/providers/expenses_provider.dart';
 import 'package:recorrentes/utils/money.dart';
 import 'package:recorrentes/models/expense_model.dart';
+import 'package:recorrentes/providers/expenses_provider.dart';
 import 'package:recorrentes/widgets/expenses/form/expense_form.dart';
 import 'package:recorrentes/widgets/shared/primary_button.dart';
 
