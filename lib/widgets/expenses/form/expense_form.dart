@@ -39,7 +39,7 @@ class ExpenseFormState extends State<ExpenseForm> {
 
     setState(() {
       if (expenseForEdit != null && expenseForEdit.paymentDate != null) {
-        selectedDate = DateTime.parse(expenseForEdit.paymentDate!).toString();
+        selectedDate = expenseForEdit.paymentDate!;
       }
     });
 
@@ -119,13 +119,13 @@ class ExpenseFormState extends State<ExpenseForm> {
           ),
           CustomTextField(
             controller: titleController,
-            title: 'Título',
+            label: 'Título',
           ),
           const SizedBox(height: 8),
           CustomTextField(
             controller: descriptionController,
             maxLines: 2,
-            title: 'Descrição',
+            hintText: 'Descrição',
           ),
           const SizedBox(height: 8),
           Row(
@@ -134,14 +134,14 @@ class ExpenseFormState extends State<ExpenseForm> {
               Flexible(
                 child: MoneyField(
                   controller: valueController,
-                  title: 'Valor',
+                  label: 'Valor',
                 ),
               ),
               const SizedBox(width: 8),
               Flexible(
                 child: DatePicker(
                   controller: paymentDateController,
-                  title: 'Data de pagamento',
+                  label: 'Data de pagamento',
                   onSelectDate: extractDate,
                   onLoad: (date) => extractDate(date),
                 ),

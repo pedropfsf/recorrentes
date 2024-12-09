@@ -88,8 +88,9 @@ class ExpenseItem extends StatelessWidget {
         ),
       ),
       trailing: PrimaryButton(
-        onPressed: () {},
-        title: 'Pagar',
+        onPressed: () => expensesProvider.togglePaidExpense(item),
+        backgroundColor: item.isPaid! ? Colors.green : null,
+        title: item.isPaid! ? 'Pago' : 'Pagar',
       ),
     );
   }

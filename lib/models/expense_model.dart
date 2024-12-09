@@ -8,8 +8,10 @@ class ExpenseModel {
     required this.title,
     this.description,
     required this.value,
+    this.isPaid,
     this.paymentDate,
   }) {
+    isPaid = false;
     createdAt = DateTime.now().toIso8601String();
   }
 
@@ -18,6 +20,7 @@ class ExpenseModel {
   String? description = '';
   double value = 0;
   String? paymentDate;
+  bool? isPaid;
   String? createdAt;
 
   Map<String, dynamic> toMap() {
@@ -27,6 +30,7 @@ class ExpenseModel {
       'description': description,
       'value': value,
       'paymentDate': paymentDate,
+      'isPaid': isPaid,
       'createdAt': createdAt,
     };
   }
@@ -37,6 +41,7 @@ class ExpenseModel {
       title: data['title'],
       description: data['description'],
       value: data['value'],
+      isPaid: data['isPaid'],
       paymentDate: data['paymentDate'],
     );
   }

@@ -48,7 +48,8 @@ class DatePickerState extends State<DatePicker> {
       controller: widget.controller,
       decoration: InputDecoration(
         isDense: true,
-        hintText: widget.title,
+        label: widget.label != null ? Text(widget.label!) : null,
+        hintText: widget.hintText,
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.deepPurpleAccent,
@@ -69,13 +70,15 @@ class DatePickerState extends State<DatePicker> {
 class DatePicker extends StatefulWidget {
   const DatePicker({
     super.key,
-    this.title,
+    this.label,
+    this.hintText,
     this.onSelectDate,
     this.controller,
     this.onLoad,
   });
 
-  final String? title;
+  final String? label;
+  final String? hintText;
   final void Function(DateTime? date)? onSelectDate;
   final void Function(DateTime? date)? onLoad;
   final TextEditingController? controller;

@@ -60,6 +60,11 @@ class ExpensesProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void togglePaidExpense(ExpenseModel expense) {
+    expense.isPaid = !expense.isPaid!;
+    editExpense(expense);
+  }
+
   UnmodifiableListView<ExpenseModel> get expenses {
     return UnmodifiableListView(_expenses);
   }

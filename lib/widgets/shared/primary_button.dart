@@ -4,10 +4,12 @@ class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     super.key,
     this.onPressed,
+    this.backgroundColor,
     this.title = 'Clique me',
   });
 
   final VoidCallback? onPressed;
+  final Color? backgroundColor;
   final String title;
 
   @override
@@ -17,7 +19,7 @@ class PrimaryButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryColor,
+        backgroundColor: backgroundColor ?? primaryColor,
       ),
       child: Text(
         title,

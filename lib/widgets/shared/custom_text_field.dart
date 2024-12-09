@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {super.key, this.title, this.maxLines, this.controller});
+  const CustomTextField({
+    super.key,
+    this.hintText,
+    this.label,
+    this.maxLines,
+    this.controller,
+  });
 
-  final String? title;
+  final String? label;
+  final String? hintText;
   final int? maxLines;
 
   final TextEditingController? controller;
@@ -16,7 +22,8 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         isDense: true,
-        hintText: title,
+        label: label != null ? Text(label!) : null,
+        hintText: hintText,
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.deepPurpleAccent,

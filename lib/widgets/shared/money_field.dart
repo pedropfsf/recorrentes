@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class MoneyField extends StatelessWidget {
   const MoneyField({
     super.key,
-    this.title,
+    this.label,
+    this.hintText,
     this.maxLines,
     this.controller,
   });
 
-  final String? title;
+  final String? label;
+  final String? hintText;
   final int? maxLines;
 
   final CurrencyTextFieldController? controller;
@@ -22,7 +24,8 @@ class MoneyField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         isDense: true,
-        hintText: title,
+        label: label != null ? Text(label!) : null,
+        hintText: hintText,
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.deepPurpleAccent,
