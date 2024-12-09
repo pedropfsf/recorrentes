@@ -9,13 +9,25 @@ import 'package:recorrentes/widgets/shared/app_bar_title.dart';
 import 'package:recorrentes/widgets/expenses/expense_item.dart';
 import 'package:recorrentes/widgets/expenses/floating_button_expense_form.dart';
 
-class App extends StatelessWidget {
-  const App({super.key});
+class AppState extends State<App> {
+  bool isInitialized = false;
+
+  @override
+  void didChangeDependencies() {
+    final expensesProvider = context.read<ExpensesProvider>();
+    if (!isInitialized) {
+      expensesProvider.getSavedExpenses();
+      isInitialized = true;
+    }
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     final expensesProvider = context.watch<ExpensesProvider>();
     final expenses = expensesProvider.expenses;
+
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
@@ -63,4 +75,11 @@ class App extends StatelessWidget {
       ),
     );
   }
+}
+
+class App extends StatefulWidget {
+  const App({super.key});
+
+  @override
+  createState() => AppState();
 }
