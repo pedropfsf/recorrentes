@@ -1,16 +1,55 @@
-# recorrentes
+<h1 align="center">Recorrentes</h1>
 
-A new Flutter project.
+<div align="center">
+  <img 
+       src="https://github.com/pedropfsf/recorrentes/blob/develop/assets/icon.png" 
+       alt="Icon app"
+       width="120px"
+       height="120px"
+  />
+</div>
+<br/>
+<p align="center">Aplicativo de gerenciamento de despesas</p>
 
-## Getting Started
+## Sobre
+Aplicativo que permite ler, cadastrar, editar e excluir registro de despesas que o usuário possui, a ideia é usar o registros de despesas para que o usuário tenha uma ideia de quanto é gasto todo o mês com contas que são mais permanentes do que simples transações, é um aplicativo inicial que vai ter novas implementações futuras, mas de inicio é somente isso que ele pode oferecer por enquanto
 
-This project is a starting point for a Flutter application.
+<br/>
+<br/>
+<div align="center">
+  <img
+       src="https://github.com/pedropfsf/recorrentes/blob/develop/presentation/screenshot1.png"
+       alt="Screenshot"
+       width="250px"
+   />
+   <img
+       src="https://github.com/pedropfsf/recorrentes/blob/develop/presentation/screenshot2.png"
+       alt="Screenshot"
+       width="250px"
+   />
+  <img
+       src="https://github.com/pedropfsf/recorrentes/blob/develop/presentation/screenshot3.png"
+       alt="Screenshot"
+       width="250px"
+   />
+  <img
+       src="https://github.com/pedropfsf/recorrentes/blob/develop/presentation/screenshot4.png"
+       alt="Screenshot"
+       width="250px"
+   />
+  <img
+       src="https://github.com/pedropfsf/recorrentes/blob/develop/presentation/screenshot5.png"
+       alt="Screenshot"
+       width="250px"
+   />
+</div>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<br/>
+<br/>
+  
+## Tecnologia
+<a href="https://flutter.dev/" target="_black">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" width="50px" alt="Flutter" title="Flutter" /> 
+<a href="https://dart.dev/" target="_black">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" width="50px" alt="Flutter" title="Flutter" />  
+</a>
