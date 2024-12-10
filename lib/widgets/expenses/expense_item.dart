@@ -31,7 +31,6 @@ class ExpenseItem extends StatelessWidget {
         builder: (BuildContext context) {
           return ExpenseForm(
             onClose: closeBottomSheet,
-            context: context,
           );
         },
       );

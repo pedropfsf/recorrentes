@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:recorrentes/providers/expenses_provider.dart';
-import 'package:recorrentes/utils/dimensions.dart';
 import 'package:recorrentes/widgets/expenses/counters.dart';
 import 'package:recorrentes/widgets/expenses/reload_expense_button.dart';
 import 'package:recorrentes/widgets/shared/app_bar_title.dart';
@@ -27,41 +26,43 @@ class AppState extends State<App> {
       statusBarColor: Colors.transparent,
     ));
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
-        title: const AppBarTitle(
-          title: 'Recorrentes',
-        ),
-        actions: const [
-          ReloadExpenseButton(),
-          AddExpenseButton(),
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 8, bottom: 8),
-            child: Counters(),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurpleAccent,
+          title: const AppBarTitle(
+            title: 'Recorrentes',
           ),
-          SizedBox(
-            height: getWindowHeight(context) - 116,
-            child: ReorderableListView(
-              padding: const EdgeInsets.all(0),
-              onReorder: expensesProvider.orderExpense,
-              children: [
-                for (int index = 0; index < expenses.length; index += 1)
-                  ExpenseItem(
-                    key: Key('$index'),
-                    item: expenses[index],
-                    dragIndex: index,
-                  )
-              ],
+          actions: const [
+            ReloadExpenseButton(),
+            AddExpenseButton(),
+          ],
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 16, bottom: 16),
+              child: Counters(),
             ),
-          )
-        ],
+            Flexible(
+              child: ReorderableListView(
+                padding: const EdgeInsets.all(0),
+                onReorder: expensesProvider.orderExpense,
+                children: [
+                  for (int index = 0; index < expenses.length; index += 1)
+                    ExpenseItem(
+                      key: Key('$index'),
+                      item: expenses[index],
+                      dragIndex: index,
+                    )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

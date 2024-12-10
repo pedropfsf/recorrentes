@@ -13,35 +13,42 @@ import 'package:recorrentes/widgets/expenses/form/form_footer.dart';
 import 'package:recorrentes/widgets/expenses/form/form_header.dart';
 
 const uuid = Uuid();
-final TextEditingController titleController = TextEditingController();
-final TextEditingController descriptionController = TextEditingController();
-final CurrencyTextFieldController valueController = CurrencyTextFieldController(
-  decimalSymbol: '.',
-  thousandSymbol: ',',
-  initIntValue: 0,
-);
-final TextEditingController paymentDateController = TextEditingController();
-
-void clearContent() {
-  titleController.clear();
-  descriptionController.clear();
-  valueController.clear();
-  paymentDateController.clear();
-}
 
 class ExpenseFormState extends State<ExpenseForm> {
   String? selectedDate;
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final CurrencyTextFieldController valueController =
+      CurrencyTextFieldController(
+    decimalSymbol: '.',
+    thousandSymbol: ',',
+    initIntValue: 0,
+  );
+  final TextEditingController paymentDateController = TextEditingController();
+
+  void clearContent() {
+    titleController.clear();
+    descriptionController.clear();
+    valueController.clear();
+    paymentDateController.clear();
+  }
 
   @override
   void initState() {
-    final expensesProvider = context.read<ExpensesProvider>();
-    final expenseForEdit = expensesProvider.expenseForEdit;
+    clearContent();
+    final expensesModel = context.watch<ExpensesProvider>();
+    final expenseForEdit = expensesModel.expenseForEdit;
+    if (expenseForEdit != null) {
+      titleController.text = expenseForEdit.title;
+      descriptionController.text = expenseForEdit.description!;
+      valueController.text = getMoney(expenseForEdit.value);
 
-    setState(() {
-      if (expenseForEdit != null && expenseForEdit.paymentDate != null) {
+      if (expenseForEdit.paymentDate != null) {
+        paymentDateController.text =
+            dateForFront(expenseForEdit.paymentDate) ?? '';
         selectedDate = expenseForEdit.paymentDate!;
       }
-    });
+    }
 
     super.initState();
   }
@@ -163,26 +170,9 @@ class ExpenseFormState extends State<ExpenseForm> {
 }
 
 class ExpenseForm extends StatefulWidget {
-  ExpenseForm({super.key, this.onClose, this.context}) {
-    clearContent();
-    if (context != null) {
-      final expensesModel = context?.watch<ExpensesProvider>();
-      final expenseForEdit = expensesModel!.expenseForEdit;
-      if (expenseForEdit != null) {
-        titleController.text = expenseForEdit.title;
-        descriptionController.text = expenseForEdit.description!;
-        valueController.text = getMoney(expenseForEdit.value);
-
-        if (expenseForEdit.paymentDate != null) {
-          paymentDateController.text =
-              dateForFront(expenseForEdit.paymentDate) ?? '';
-        }
-      }
-    }
-  }
+  const ExpenseForm({super.key, this.onClose});
 
   final VoidCallback? onClose;
-  final BuildContext? context;
 
   @override
   createState() => ExpenseFormState();
